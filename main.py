@@ -27,6 +27,22 @@ def float_list_to_bytearray(float_list):
 
     return byte_array
 
+#TODO: Go through each value individually, convert into an int,
+#  then test out and write into a ppm image
+def int_list_to_bytearray(float_list):
+    byte_array = bytearray()
+    int_list = []
+    for value in float_list:
+
+        int_representation = int(value)
+        int_list.append(int_representation)
+    # print(int_list)
+        # Iterate over bytes and convert each to an integer
+        for byte in int_list:
+            byte_array.append(byte)
+
+    return byte_array
+
 # # Example usage:
 # float_list = [3.14, 2.718, 1.618]
 # # result_bytearray = float_list_to_bytearray(float_list)
@@ -36,7 +52,7 @@ def float_list_to_bytearray(float_list):
 # if using higher refresh rates yields a 'too many retries' exception,
 # try decreasing this value to work with certain pi/camera combinations
 mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_2_HZ
-maxval = 255
+maxval = 35
 w = 0
 h = 0
 count = 1
@@ -58,7 +74,7 @@ while count > 0:
     # for i in frame:
     #     if i < 24:
     #         print(i)
-    image = float_list_to_bytearray(frame)
+    image = int_list_to_bytearray(frame)
     # print((image))
     # print(type(t))
     count -= 1
@@ -69,3 +85,4 @@ while count > 0:
         #PPM Header - Portable PixMap
         image_file.write(bytearray(ppm_header, 'ascii'))
         image_file.write(image)
+    print("Done")
