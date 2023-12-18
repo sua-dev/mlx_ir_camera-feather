@@ -27,6 +27,7 @@ def setTextArea(text):
     text_area_title.x = 10
     text_area_title.y = 10
     display_group.append(text_area_title)
+    display.show(display_group)
 
 def setTextXY(text, x, y):
     text_area_title = label.Label(terminalio.FONT, text=text)
@@ -35,6 +36,10 @@ def setTextXY(text, x, y):
     display_group.append(text_area_title)
 
 def clear_screen():
+    print("Clearing screen")
     color_bitmap = displayio.Bitmap(WIDTH, HEIGHT, 1)
     color_palette = displayio.Palette(1)
     color_palette[0] = 0x00  # White
+    bg_sprite = displayio.TileGrid(color_bitmap, pixel_shader=color_palette, x=0, y=0)
+    display_group.append(bg_sprite)
+    display.show(display_group)
