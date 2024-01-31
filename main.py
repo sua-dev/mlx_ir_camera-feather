@@ -124,6 +124,14 @@ def check_files_page():
     clear_screen()
     setTextArea("Checking Files")
     print_directory("/images/")
+    # count total number of files in directory
+    total_files = len(os.listdir("/images/"))
+    latest_file = os.listdir("/images/")[-1]
+    print("Latest File: ", latest_file)
+    setTextXY("Latest File: ", 10, 30)
+    setTextXY(latest_file, 10, 40)
+    print("Total Files: ", total_files)
+    setTextXY("Total Files: " + str(total_files), 10, 50)
 
 def main_page():
     setTextArea("IR Thermal Camera\nMain Menu")
