@@ -1,4 +1,4 @@
-import board
+from config import *
 import terminalio
 import displayio
 import adafruit_displayio_sh1107
@@ -49,3 +49,9 @@ def clear_screen():
     bg_sprite = displayio.TileGrid(color_bitmap, pixel_shader=color_palette, x=0, y=0)
     display_group.append(bg_sprite)
     display.show(display_group)
+
+def debouncable(pin):
+    switch_io = digitalio.DigitalInOut(pin)
+    switch_io.direction = digitalio.Direction.INPUT
+    switch_io.pull = digitalio.Pull.UP
+    return switch_io
