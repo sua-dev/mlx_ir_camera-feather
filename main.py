@@ -24,10 +24,10 @@ temp_offset = -5
 # Initialize RTC
 rtc = adafruit_pcf8523.PCF8523(i2c)
 
-# Initialize Buttons
-buttonA = Debouncer(debouncable(board.D5))
-buttonB = Debouncer(debouncable(board.D21))
-buttonC = Debouncer(debouncable(board.D20))
+# Initialize Buttons                        UM Feather S2   Feather M4
+buttonA = Debouncer(debouncable(board.D9)) # 1   D5           9
+buttonB = Debouncer(debouncable(board.D6)) # 38  D21          6 
+buttonC = Debouncer(debouncable(board.D5)) # 33  D20          5
 
 
 def button_check(button_a, button_b, button_c):
@@ -125,13 +125,17 @@ def check_files_page():
     setTextArea("Checking Files")
     print_directory("/images/")
     # count total number of files in directory
-    total_files = len(os.listdir("/images/"))
-    latest_file = os.listdir("/images/")[-1]
-    print("Latest File: ", latest_file)
-    setTextXY("Latest File: ", 10, 30)
-    setTextXY(latest_file, 10, 40)
-    print("Total Files: ", total_files)
-    setTextXY("Total Files: " + str(total_files), 10, 50)
+    try:
+        total_files = len(os.listdir("/images/"))
+        latest_file = os.listdir("/images/")[-1]
+        print("Latest File: ", latest_file)
+        setTextXY("Latest File: ", 10, 30)
+        setTextXY(latest_file, 10, 40)
+        print("Total Files: ", total_files)
+        setTextXY("Total Files: " + str(total_files), 10, 50)
+    except IndexError:
+        print("No Files")
+        setTextXY("No Files", 10, 30)
 
 def main_page():
     setTextArea("IR Thermal Camera\nMain Menu")
