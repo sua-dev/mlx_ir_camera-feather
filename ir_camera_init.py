@@ -7,11 +7,13 @@ import busio
 import digitalio
 import adafruit_mlx90640
 from adafruit_datetime import datetime
-from screen_dynamics import i2c
+from screen_dynamics import *
+from config import buttonA, buttonB, buttonC
 
 import rtc
-
-import adafruit_ds3231
+import gc
+# import adafruit_ds3231
+import adafruit_pcf8523
 
 ONBOARD_LED = digitalio.DigitalInOut(board.LED)
 ONBOARD_LED.direction = digitalio.Direction.OUTPUT
@@ -35,7 +37,7 @@ mlx = adafruit_mlx90640.MLX90640(i2c)
 print("MLX addr detected on I2C")
 # print([hex(i) for i in mlx.serial_number])
 
-ds_rtc = adafruit_ds3231.DS3231(i2c)
+ds_rtc = adafruit_pcf8523.PCF8523(i2c)
 
 # print("Setting time")
 # # REFERENCE : (2017, 10, 29, 15, 14, 15, 0, -1, -1)
@@ -65,18 +67,37 @@ def int_list_to_bytearray(float_list):
 
     return byte_array
 
-def capture_frames():
+def capture_frames(button_a):
+    # gc.collect()
     maxval = 255
     frame = [0] * 768
     count = 1
     frame_number = []
     ascii_char = []
+    update_flag = True
+    update_frame_number_label = label.Label(terminalio.FONT, text="FRAME No. {}".format(count), x=10, y=30)
+    display_group.append(update_frame_number_label)
     # Can also replace the line below with while True for number of frames is unknown 
     # while count < NUMBER_OF_FRAMES:
-    while True:
+    while update_flag:
+        
+        # buttonB.update()
+        # if buttonB.fell:
+        #     update_flag = False
+        #     print("Exited")
+        #     setTextXY("Exited", 10, 30)
+        #     clear_screen()
+        #     # main_page()
+        #     break
+        # print("FRAME No. {}".format(count))
+    # else:
+        update_frame_number_label.text = "FRAME No. {}".format(count)
+        display.show(display_group)
+
         frame_number.clear()
         ONBOARD_LED.value = True
         print("FRAME No. {}".format(count))
+        # setTextXY("FRAME No. {}".format(count), 10, 30)
         stamp = time.monotonic()
         try:
             mlx.getFrame(frame)
@@ -196,6 +217,7 @@ def capture_frames():
         ONBOARD_LED.value = False
         time.sleep(1)
         count +=1
+        # gc.collect()
             # for i in ascii_char:
             #     file.write(i)
             # file.write('\n')

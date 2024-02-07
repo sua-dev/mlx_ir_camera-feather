@@ -50,8 +50,3 @@ def clear_screen():
     display_group.append(bg_sprite)
     display.show(display_group)
 
-def debouncable(pin):
-    switch_io = digitalio.DigitalInOut(pin)
-    switch_io.direction = digitalio.Direction.INPUT
-    switch_io.pull = digitalio.Pull.UP
-    return switch_io

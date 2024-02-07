@@ -6,7 +6,6 @@ import time
 # External Libraries
 from config import *
 import adafruit_pcf8523
-from adafruit_debouncer import Debouncer
 from screen_dynamics import *
 from ir_camera_init import *
 from Drivers.SPI_SD import *
@@ -23,11 +22,6 @@ temp_offset = -5
 
 # Initialize RTC
 rtc = adafruit_pcf8523.PCF8523(i2c)
-
-# Initialize Buttons                        UM Feather S2   Feather M4
-buttonA = Debouncer(debouncable(board.D9)) # 1   D5           9
-buttonB = Debouncer(debouncable(board.D6)) # 38  D21          6 
-buttonC = Debouncer(debouncable(board.D5)) # 33  D20          5
 
 
 def button_check(button_a, button_b, button_c):
@@ -85,27 +79,41 @@ def record_page():
     clear_screen()
     setTextArea("Ready to Record")
     setTextXY("A - Record", 10, 30)
-    setTextXY("B - Stop", 10, 40)
-    setTextXY("C - Exit", 10, 50)
+    # setTextXY("B - Stop", 10, 40)
+    setTextXY("C - Exit", 10, 40)
+    button_recording_screen = 0
 
 
 
     while capture_flag:
         buttonA.update()
         if buttonA.fell:
-            print("Recording")
-            clear_screen()
-            setTextArea("Recording")
-            capture_frames()
+            button_recording_screen += 1
+            if button_recording_screen == 1:
+                print("Recording")
+                clear_screen()
+                setTextArea("Recording")
+                capture_frames(buttonA)
+            if button_recording_screen == 2:
+                print("Stopped Recording")
+                clear_screen()
+                setTextArea("Stopped Recording")
+                capture_flag = False
+                break
+            if button_recording_screen > 2:
+                button_recording_screen = 0
+                clear_screen()
+                main_page()
+
             # capture_flag = False
             # break
-        buttonB.update()
-        if buttonB.fell:
-            print("Stopped Recording")
-            clear_screen()
-            setTextArea("Stopped Recording")
-            capture_flag = False
-            break
+        # buttonB.update()
+        # if buttonB.fell:
+        #     print("Stopped Recording")
+        #     clear_screen()
+        #     setTextArea("Stopped Recording")
+        #     capture_flag = False
+        #     break
         buttonC.update()
         if buttonC.fell:
             print("Exited")
@@ -123,7 +131,7 @@ def record_page():
 def check_files_page():
     clear_screen()
     setTextArea("Checking Files")
-    print_directory("/images/")
+    # print_directory("/images/")
     # count total number of files in directory
     try:
         total_files = len(os.listdir("/images/"))

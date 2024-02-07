@@ -1,3 +1,7 @@
+#boot.py - filesystem handler to be used with data_logger - reused for IR Thermal Camera
+#Author: Sherif Attia
+#Date: 31/01/2024
+
 import board, digitalio, time, storage
 from adafruit_debouncer import Debouncer
 
