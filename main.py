@@ -2,6 +2,7 @@ import board
 import digitalio
 import time
 import supervisor
+import os
 
 
 # External Libraries
@@ -9,7 +10,6 @@ from config import *
 import adafruit_pcf8523
 from screen_dynamics import *
 from ir_camera_init import *
-from Drivers.SPI_SD import *
 
 # Global Variables
 but_pressed = -1
@@ -55,13 +55,10 @@ def current_time_page():
     loop_flag = True
     clear_screen()
     setTextArea("Current Time")
-    # setTextXY("Date: " + str(rtc.datetime.tm_mday) + "/" + str(rtc.datetime.tm_mon) + "/" + str(rtc.datetime.tm_year), 10, 30)
-    # setTextXY("Time: " + str(rtc.datetime.tm_hour) + ":" + str(rtc.datetime.tm_min) + ":" + str(rtc.datetime.tm_sec), 10, 50)
     updated_date = label.Label(terminalio.FONT, text="Date: " + str(rtc.datetime.tm_mday) + "/" + str(rtc.datetime.tm_mon) + "/" + str(rtc.datetime.tm_year), x=10, y=30)
     display_group.append(updated_date)
     updated_time = label.Label(terminalio.FONT, text="Time: " + str(rtc.datetime.tm_hour) + ":" + str(rtc.datetime.tm_min) + ":" + str(rtc.datetime.tm_sec), x=10, y=50)
     display_group.append(updated_time)
-    # display.show(display_group)
 
     while loop_flag:
         buttonA.update()
@@ -106,15 +103,6 @@ def record_page():
                 clear_screen()
                 main_page()
 
-            # capture_flag = False
-            # break
-        # buttonB.update()
-        # if buttonB.fell:
-        #     print("Stopped Recording")
-        #     clear_screen()
-        #     setTextArea("Stopped Recording")
-        #     capture_flag = False
-        #     break
         buttonC.update()
         if buttonC.fell:
             print("Exited")
@@ -122,12 +110,6 @@ def record_page():
             main_page()
             capture_flag = False
             break
-        # else:
-        #     print("Not Recording")
-        #     clear_screen()
-        #     setTextArea("Stopped Recording")
-        #     capture_flag = False
-            # break
 
 def check_files_page():
     clear_screen()
