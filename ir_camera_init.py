@@ -8,7 +8,7 @@ import digitalio
 import adafruit_mlx90640
 from adafruit_datetime import datetime
 from screen_dynamics import *
-from config import buttonA, buttonB, buttonC
+from config import buttonA, buttonB, buttonC, storage
 
 import rtc
 import gc
@@ -221,3 +221,14 @@ def capture_frames(button_a):
             # for i in ascii_char:
             #     file.write(i)
             # file.write('\n')
+        
+        # Check if the button has been pressed whilst recording - unmount the device and stop writing data
+        buttonA.update()
+        if buttonA.fell:
+            print("stopped logging")
+            clear_screen()
+            setTextArea("Stopped")
+            update_flag = False
+            image_file.close()
+            storage.umount("/")
+            break

@@ -1,6 +1,7 @@
 import board
 import digitalio
 import time
+import supervisor
 
 
 # External Libraries
@@ -162,4 +163,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except OSError:
+        print("Error Occurred\nRestarting...")
+        setTextArea("Error Occurred\nRestarting...")
+        time.sleep(1)
+        supervisor.reload()
