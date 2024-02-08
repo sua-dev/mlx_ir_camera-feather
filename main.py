@@ -9,7 +9,7 @@ import os
 from config import *
 import adafruit_pcf8523
 from screen_dynamics import *
-from ir_camera_init import *
+from ir_camera import *
 
 # Global Variables
 but_pressed = -1
