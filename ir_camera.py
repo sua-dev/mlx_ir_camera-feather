@@ -186,7 +186,7 @@ def capture_frames(button_a):
         # r = rtc.RTC()
         # rtc.set_time_source()
         # r.datetime = current_time
-        updated_time = current_time
+        updated_time = ds_rtc.datetime
         print("Stored in file: {:02}_{:02}_{}_{:02}_{:02}_{:02}__{}.pgm".format(
                 updated_time[2],
                 updated_time[1],
