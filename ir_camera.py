@@ -186,23 +186,23 @@ def capture_frames(button_a):
         # r = rtc.RTC()
         # rtc.set_time_source()
         # r.datetime = current_time
-        # x = current_time
+        updated_time = current_time
         print("Stored in file: {:02}_{:02}_{}_{:02}_{:02}_{:02}__{}.pgm".format(
-                current_time[2],
-                current_time[1],
-                current_time[0],
-                current_time[3],
-                current_time[4],
-                current_time[5],
+                updated_time[2],
+                updated_time[1],
+                updated_time[0],
+                updated_time[3],
+                updated_time[4],
+                updated_time[5],
                 count
             ))
-        FILE_PATH_DATE ="images/{:02}_{:02}_{}_{:02}_{:02}_{:02}__{}.pgm".format(
-                current_time[2],
-                current_time[1],
-                current_time[0],
-                current_time[3],
-                current_time[4],
-                current_time[5],
+        FILE_PATH_DATE ="/sd/Images/{:02}_{:02}_{}_{:02}_{:02}_{:02}__{}.pgm".format(
+                updated_time[2],
+                updated_time[1],
+                updated_time[0],
+                updated_time[3],
+                updated_time[4],
+                updated_time[5],
                 count
             )
         
