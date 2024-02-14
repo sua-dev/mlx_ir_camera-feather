@@ -90,7 +90,8 @@ def record_page():
             if button_recording_screen == 1:
                 print("Recording")
                 clear_screen()
-                setTextArea("Recording")
+                setTextXY("Press A to Stop", 10, 10)
+                setTextXY("Recording", 10, 20)
                 capture_frames(buttonA)
             if button_recording_screen == 2:
                 print("Stopped Recording")
@@ -117,8 +118,8 @@ def check_files_page():
     # print_directory("/images/")
     # count total number of files in directory
     try:
-        total_files = len(os.listdir("/images/"))
-        latest_file = os.listdir("/images/")[-1]
+        total_files = len(os.listdir("/sd/Images/"))
+        latest_file = os.listdir("/sd/Images/")[-1]
         print("Latest File: ", latest_file)
         setTextXY("Latest File: ", 10, 30)
         setTextXY(latest_file, 10, 40)

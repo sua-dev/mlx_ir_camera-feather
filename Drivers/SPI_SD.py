@@ -67,6 +67,6 @@ def print_directory(path, tabs=0):
 SPI_SD = SPI(board.SCK, board.MOSI, board.MISO)
 '''SPI SMT SD CARD PINS'''
 
-CS = DigitalInOut(board.D19)
+CS = DigitalInOut(board.D6) # Set to CS pin of SD card
 '''SPI CS PIN'''
 mount_SD(SPI_SD, CS)
