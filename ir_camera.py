@@ -48,6 +48,8 @@ current_time = ds_rtc.datetime
 
 # print(current_time)
 
+WAKEUP_WINDOW_FRAMES = [20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240]
+
 
 mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_2_HZ
 
@@ -67,7 +69,7 @@ def int_list_to_bytearray(float_list):
 
     return byte_array
 
-def capture_frames(button_a):
+def capture_frames(button_a, button_b):
     # gc.collect()
     maxval = 255
     frame = [0] * 768
@@ -76,6 +78,7 @@ def capture_frames(button_a):
     ascii_char = []
     update_flag = True
     update_frame_number_label = label.Label(terminalio.FONT, text="FRAME No. {}".format(count), x=10, y=30)
+    update_frame_number_labe_wakeup = label.Label(terminalio.FONT, text="FRAME No. {}".format(count), x=10, y=30)
     display_group.append(update_frame_number_label)
     # Can also replace the line below with while True for number of frames is unknown 
     # while count < NUMBER_OF_FRAMES:
@@ -92,7 +95,31 @@ def capture_frames(button_a):
         # print("FRAME No. {}".format(count))
     # else:
         update_frame_number_label.text = "FRAME No. {}".format(count)
+        update_frame_number_labe_wakeup.text = "FRAME No. {}".format(count)
         display.show(display_group)
+
+        # set display to blank if count is greather than 20
+        if count in WAKEUP_WINDOW_FRAMES:
+            clear_screen()
+            # display.show(display_group)
+        
+        
+        # if button B is pressed, show the frame number
+            
+        button_b.update()
+        if button_b.fell:
+            setTextXY("Hold A to Stop", 10, 10)
+            setTextXY("Recording", 10, 20)
+            display_group.remove(update_frame_number_label)
+            display_group.append(update_frame_number_labe_wakeup)
+            
+            # update_frame_number_label.text = "FRAME No. {}".format(count)
+            # display_group.append(update_frame_number_label)
+            display.show(display_group)
+            # print("FRAME No. {}".format(count))
+            # time.sleep(1)
+        # else:
+            
 
         frame_number.clear()
         ONBOARD_LED.value = True
@@ -109,32 +136,32 @@ def capture_frames(button_a):
             for w in range(32):
                 t = frame[h * 32 + w]
                 frame_number.append(t)
-        #         if PRINT_TEMPERATURES:
-        #             print("%0.1f, " % t, end="")
-        #         if PRINT_ASCIIART:
-        #             c = "&"
-        #             # pylint: disable=multiple-statements
-        #             if t < 20:
-        #                 c = " "
-        #             elif t < 23:
-        #                 c = "."
-        #             elif t < 25:
-        #                 c = "-"
-        #             elif t < 27:
-        #                 c = "*"
-        #             elif t < 29:
-        #                 c = "+"
-        #             elif t < 31:
-        #                 c = "x"
-        #             elif t < 33:
-        #                 c = "%"
-        #             elif t < 35:
-        #                 c = "#"
-        #             elif t < 37:
-        #                 c = "X"
-        #             # pylint: enable=multiple-statements
-        #             print(c, end="")
-        #             ascii_char.append(c)
+                # if PRINT_TEMPERATURES:
+                #     print("%0.1f, " % t, end="")
+                # if PRINT_ASCIIART:
+                #     c = "&"
+                #     # pylint: disable=multiple-statements
+                #     if t < 20:
+                #         c = " "
+                #     elif t < 23:
+                #         c = "."
+                #     elif t < 25:
+                #         c = "-"
+                #     elif t < 27:
+                #         c = "*"
+                #     elif t < 29:
+                #         c = "+"
+                #     elif t < 31:
+                #         c = "x"
+                #     elif t < 33:
+                #         c = "%"
+                #     elif t < 35:
+                #         c = "#"
+                #     elif t < 37:
+                #         c = "X"
+                #     # pylint: enable=multiple-statements
+                #     print(c, end="")
+                #     ascii_char.append(c)
         #     print()
         # print()
         # print(frame_number)
