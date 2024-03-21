@@ -109,34 +109,34 @@ def capture_frames(button_a):
             for w in range(32):
                 t = frame[h * 32 + w]
                 frame_number.append(t)
-                if PRINT_TEMPERATURES:
-                    print("%0.1f, " % t, end="")
-                if PRINT_ASCIIART:
-                    c = "&"
-                    # pylint: disable=multiple-statements
-                    if t < 20:
-                        c = " "
-                    elif t < 23:
-                        c = "."
-                    elif t < 25:
-                        c = "-"
-                    elif t < 27:
-                        c = "*"
-                    elif t < 29:
-                        c = "+"
-                    elif t < 31:
-                        c = "x"
-                    elif t < 33:
-                        c = "%"
-                    elif t < 35:
-                        c = "#"
-                    elif t < 37:
-                        c = "X"
-                    # pylint: enable=multiple-statements
-                    print(c, end="")
-                    ascii_char.append(c)
-            print()
-        print()
+        #         if PRINT_TEMPERATURES:
+        #             print("%0.1f, " % t, end="")
+        #         if PRINT_ASCIIART:
+        #             c = "&"
+        #             # pylint: disable=multiple-statements
+        #             if t < 20:
+        #                 c = " "
+        #             elif t < 23:
+        #                 c = "."
+        #             elif t < 25:
+        #                 c = "-"
+        #             elif t < 27:
+        #                 c = "*"
+        #             elif t < 29:
+        #                 c = "+"
+        #             elif t < 31:
+        #                 c = "x"
+        #             elif t < 33:
+        #                 c = "%"
+        #             elif t < 35:
+        #                 c = "#"
+        #             elif t < 37:
+        #                 c = "X"
+        #             # pylint: enable=multiple-statements
+        #             print(c, end="")
+        #             ascii_char.append(c)
+        #     print()
+        # print()
         # print(frame_number)
 
         image = int_list_to_bytearray(frame_number)

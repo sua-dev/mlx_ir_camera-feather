@@ -90,7 +90,7 @@ def record_page():
             if button_recording_screen == 1:
                 print("Recording")
                 clear_screen()
-                setTextXY("Press A to Stop", 10, 10)
+                setTextXY("Hold A to Stop", 10, 10)
                 setTextXY("Recording", 10, 20)
                 capture_frames(buttonA)
             if button_recording_screen == 2:
